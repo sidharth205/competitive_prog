@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+int main(){
+    int first_ocurrence = -1, last_occurrence = -1;
+    int arr[100], n, key, low, high, mid;
+    cout << "Enter number of elements in array: ";
+    cin >> n;
+    cout << "Enter elements in sorted order: ";
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+    cout << "Enter element to search: ";
+    cin >> key; 
+    low = 0;
+    high = n - 1;
+    while(low <= high) {
+        mid = (low + high) / 2;
+        if(arr[mid] == key) {
+            first_ocurrence = mid; 
+            last_occurrence = mid; 
+            int temp = mid - 1;
+            while(temp >= 0 && arr[temp] == key) {
+                first_ocurrence = temp; // Update first occurrence
+                temp--;
+            }
+            // Check for later occurrences
+            temp = mid + 1;
+            while(temp < n && arr[temp] == key) {
+                last_occurrence = temp; // Update last occurrence
+                temp++;
+            }
+            break; // Exit loop after finding all occurrences
+        } else if(arr[mid] < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    if(first_ocurrence != -1) {
+        cout << "First occurrence of " << key << " is at index: " << first_ocurrence << endl;
+        cout << "Last occurrence of " << key << " is at index: " << last_occurrence << endl;
+    } else {
+        cout << "Element not found in the array." << endl;
+    }
+}
